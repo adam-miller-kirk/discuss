@@ -3,7 +3,7 @@
 import type { Topic } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { unknown, z } from "zod";
+import { z } from "zod";
 import { auth } from "@/auth";
 import { db } from "@/db";
 import { paths } from "@/paths";
@@ -27,7 +27,7 @@ interface CreateTopicFormState {
 }
 
 export async function createTopic(
-  formState: CreateTopicFormState,
+  _: CreateTopicFormState,
   formData: FormData
 ): Promise<CreateTopicFormState> {
   const session = await auth();
