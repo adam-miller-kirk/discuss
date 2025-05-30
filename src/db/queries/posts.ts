@@ -7,6 +7,11 @@ export type PostWithData = Post & {
   _count: { comments: number };
 };
 
+// NOTE: an example of how to write a type by using the function (super lazy)
+// export type PostWithData = Awaited<
+//   ReturnType<typeof fetchPostByTopicSlug>
+// >[number];
+
 export function fetchPostByTopicSlug(slug: string): Promise<PostWithData[]> {
   return db.post.findMany({
     where: { topic: { slug } },
