@@ -6,9 +6,11 @@ export type CommentWithAuthor = Comment & {
   user: { name: string | null; image: string | null };
 };
 
+// This is a standard fetch query without cache so will be called miltiple times
 export function fetchCommentsByPostId(
   postId: string
 ): Promise<CommentWithAuthor[]> {
+  console.log("making a query without cache");
   return db.comment.findMany({
     where: { postId },
     include: {
@@ -34,6 +36,7 @@ export function fetchCommentsByPostId(
 
 export const fetchCommentsByPostIdWithCache = cache(
   (postId: string): Promise<CommentWithAuthor[]> => {
+    console.log("making a query with cache");
     return db.comment.findMany({
       where: { postId },
       include: {
