@@ -7,6 +7,19 @@ export type PostWithData = Post & {
   _count: { comments: number };
 };
 
+export function fetchPostsBySearchTerm(term: string): Promise<PostWithData[]> {
+  return db.post.findMany({
+    include: {
+      topic: { select: { slug: true } },
+      user: { select: { name: true, image: true } },
+      _count: { select: { comments: true } },
+    },
+    where: {
+      OR: [{ title: { contains: term } }, { content: { contains: term } }],
+    },
+  });
+}
+
 /* 
     NOTE: an example of how to write a type by using the function (super lazy)
     what this does is use the method and waits the result to use that as a type.
